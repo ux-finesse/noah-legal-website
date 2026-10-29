@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ivory font-sans text-navy antialiased;
+  }
+  a:hover {
+    color: theme("colors.gold.ink");
+  }
+  .on-navy a:hover {
+    color: theme("colors.gold.DEFAULT");
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8;
+  }
+  .eyebrow {
+    @apply text-[13px] font-semibold uppercase tracking-eyebrow;
+  }
+  .display {
+    @apply font-serif font-normal leading-none tracking-[-0.02em];
+  }
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center px-6 text-[15px] font-bold no-underline transition-colors;
+  }
+  .link-arrow {
+    @apply inline-flex min-h-[44px] items-center gap-2.5 border-b border-current text-[15px] font-bold no-underline;
+  }
+  .placeholder-box {
+    @apply flex items-center justify-center text-[13px] tracking-[0.08em];
+  }
+}
