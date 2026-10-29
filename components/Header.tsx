@@ -22,11 +22,13 @@ export default function Header({ areas }: { areas: Area[] }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close menus on navigation.
-  useEffect(() => {
+  // Close menus on navigation (adjust state during render, not in an effect).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
     setExpOpen(false);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   // Close the dropdown on Escape or outside click.
   useEffect(() => {
