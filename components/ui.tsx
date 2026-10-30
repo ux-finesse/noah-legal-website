@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import { ArrowRight } from "./icons";
+import Button, { ArrowLink } from "./Button";
 
 /** Navy page header used by every inner page (Iteration 1 pattern). */
 export function PageHero({
@@ -51,9 +50,9 @@ export function SectionHead({
         <h2 className="display text-[clamp(40px,5vw,64px)] leading-[1.02]">{title}</h2>
       </div>
       {href && linkLabel && (
-        <Link href={href} className={`link-arrow ${dark ? "text-ivory" : "text-navy"}`}>
-          {linkLabel} <ArrowRight />
-        </Link>
+        <ArrowLink href={href} tone={dark ? "light" : "dark"}>
+          {linkLabel}
+        </ArrowLink>
       )}
     </div>
   );
@@ -93,9 +92,7 @@ export function CtaBand({ title }: { title: React.ReactNode }) {
   return (
     <section className="container-site flex flex-wrap items-end gap-x-20 gap-y-10 py-28">
       <h2 className="display min-w-0 flex-[999_1_600px] text-[clamp(36px,4.6vw,64px)] leading-[1.05]">{title}</h2>
-      <Link href="/contact" className="btn min-h-[52px] bg-navy px-7 text-ivory hover:text-gold">
-        Book a consultation
-      </Link>
+      <Button href="/contact">Book a consultation</Button>
     </section>
   );
 }

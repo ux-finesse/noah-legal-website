@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import Header from "@/components/Header";
-import { ArrowRight } from "@/components/icons";
 import { Accent, Picture, SectionHead } from "@/components/ui";
 import { formatDate, getInsights, getPeople, getPracticeAreas, getSettings } from "@/lib/content";
+import Button, { ArrowLink } from "@/components/Button";
 
 export default async function HomePage() {
   const [areas, people, insights, settings] = await Promise.all([getPracticeAreas(), getPeople(), getInsights(), getSettings()]);
@@ -44,12 +44,12 @@ export default async function HomePage() {
                 NOAH LEGAL advises businesses, lenders and investors on the transactions, disputes and regulation that shape their growth.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link href="/expertise" className="btn bg-gold px-[26px] text-navy hover:text-navy">
+                <Button variant="gold" href="/expertise">
                   Our expertise
-                </Link>
-                <Link href="/people" className="btn border border-ivory/40 px-[26px] font-semibold text-ivory">
+                </Button>
+                <Button variant="outline-light" href="/people">
                   Meet the team
-                </Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -67,13 +67,14 @@ export default async function HomePage() {
               We take on complex matters and make them <Accent gold={false}>simple to act on</Accent> — with discretion, rigour and a commercial eye.
             </h2>
             <p className="text-[17px] leading-[1.7] text-muted">{settings.firmIntro}</p>
-            <Link href="/firm" className="link-arrow mt-7 text-navy">
-              About the firm <ArrowRight />
-            </Link>
+            <ArrowLink href="/firm" className="mt-7">
+              About the firm
+            </ArrowLink>
           </div>
         </section>
 
         {/* EXPERTISE */}
+        {featuredAreas.length > 0 && (
         <section className="bg-sand">
           <div className="container-site py-28">
             <SectionHead eyebrow="Expertise" title={<>Where we <Accent gold={false}>practise</Accent></>} href="/expertise" linkLabel="All practice areas" />
@@ -94,8 +95,10 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+        )}
 
         {/* PEOPLE */}
+        {featuredPeople.length > 0 && (
         <section className="container-site py-28">
           <SectionHead eyebrow="Our People" title={<>The <Accent gold={false}>counsel</Accent> behind the work</>} href="/people" linkLabel="All lawyers" />
           <div className="flex flex-wrap gap-x-6 gap-y-8">
@@ -110,6 +113,7 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
+        )}
 
         {/* INSIGHTS */}
         {lead && (
@@ -161,12 +165,10 @@ export default async function HomePage() {
             Bring us the hard question. We’ll bring a <span className="italic text-gold-ink">clear answer.</span>
           </h2>
           <div className="flex flex-[1_1_280px] flex-wrap gap-3">
-            <Link href="/contact" className="btn min-h-[52px] bg-navy px-7 text-ivory hover:text-gold">
-              Book a consultation
-            </Link>
-            <Link href="/contact" className="btn min-h-[52px] border border-navy px-7 font-semibold text-navy">
+            <Button href="/contact">Book a consultation</Button>
+            <Button variant="outline" href="/contact">
               Contact us
-            </Link>
+            </Button>
           </div>
         </section>
       </main>

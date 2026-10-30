@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import NavyHeader from "@/components/NavyHeader";
 import { Accent, Picture } from "@/components/ui";
 import { getPeople, getPracticeAreas, getSettings } from "@/lib/content";
+import Button from "@/components/Button";
 
 export const metadata: Metadata = { title: "The Firm" };
 
@@ -20,7 +20,7 @@ export default async function FirmPage() {
   const stats = [
     [settings.foundedYear, "Founded"],
     [settings.lawyerCount, "Lawyers"],
-    [String(areas.length), "Practice areas"],
+    [areas.length ? String(areas.length) : "", "Practice areas"],
     [settings.officeCount, "Offices"],
   ];
 
@@ -68,7 +68,7 @@ export default async function FirmPage() {
         </section>
 
         <section aria-label="Firm at a glance" className="container-site flex flex-wrap gap-x-6 gap-y-10 py-28">
-          {stats.map(([n, l]) => (
+          {stats.filter(([n]) => n).map(([n, l]) => (
             <div key={l} className="flex flex-[1_1_240px] flex-col gap-2 border-t border-navy pt-6">
               <span className="font-serif text-[64px] leading-none">{n}</span>
               <span className="text-[15px] text-muted">{l}</span>
@@ -94,9 +94,7 @@ export default async function FirmPage() {
           <h2 className="display min-w-0 flex-[999_1_600px] text-[clamp(36px,4.6vw,64px)] leading-[1.05]">
             Meet the people <span className="italic text-gold-ink">behind the work.</span>
           </h2>
-          <Link href="/people" className="btn min-h-[52px] bg-navy px-7 text-ivory hover:text-gold">
-            Our people
-          </Link>
+          <Button href="/people">Our people</Button>
         </section>
       </main>
     </>

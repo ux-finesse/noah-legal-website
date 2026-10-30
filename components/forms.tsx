@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "./Button";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -43,9 +44,9 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
           dark ? "border border-ivory/30 bg-transparent text-ivory placeholder:text-muted-lighter" : "border border-[#B9B1A4] bg-white text-navy"
         }`}
       />
-      <button type="submit" disabled={status === "sending"} className={`btn ${dark ? "bg-gold text-navy" : "bg-navy text-ivory"}`}>
+      <Button type="submit" size="md" variant={dark ? "gold" : "navy"} disabled={status === "sending"} className="min-h-[48px]">
         {status === "sending" ? "Subscribing…" : "Subscribe"}
-      </button>
+      </Button>
       {status === "error" && (
         <p role="alert" className="w-full text-sm text-red-300">
           Something went wrong. Please try again.
@@ -125,9 +126,9 @@ export function ContactForm({ areas }: { areas: string[] }) {
           We couldn’t send your request. Please try again or email us directly.
         </p>
       )}
-      <button type="submit" disabled={status === "sending"} className="btn min-h-[56px] self-start bg-navy px-9 text-base text-ivory">
+      <Button type="submit" disabled={status === "sending"} className="self-start">
         {status === "sending" ? "Sending…" : "Send request"}
-      </button>
+      </Button>
     </form>
   );
 }

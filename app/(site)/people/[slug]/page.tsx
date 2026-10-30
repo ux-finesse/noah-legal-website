@@ -6,6 +6,7 @@ import NavyHeader from "@/components/NavyHeader";
 import PortableBody from "@/components/PortableBody";
 import { Picture } from "@/components/ui";
 import { getPeople, getPerson } from "@/lib/content";
+import Button from "@/components/Button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -56,9 +57,9 @@ export default async function PersonPage({ params }: Props) {
               </span>
             ),
           )}
-          <Link href="/contact" className="btn mt-6 self-start bg-navy text-ivory hover:text-gold">
+          <Button href="/contact" className="mt-6 self-start">
             Contact {person.name.split(" ")[0]}
-          </Link>
+          </Button>
         </aside>
         <article className="min-w-0 max-w-[760px] flex-[999_1_560px] text-lg leading-[1.75] text-[#2A3350]">
           {person.shortBio && <p className="mb-7 font-serif text-2xl leading-snug text-navy">{person.shortBio}</p>}

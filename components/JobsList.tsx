@@ -7,6 +7,7 @@ import type { Job } from "@/lib/types";
 
 import PortableBody from "./PortableBody";
 import { ArrowRight } from "./icons";
+import Button from "./Button";
 
 const DURATION = 300; // ms — keep in sync with duration-300 below
 
@@ -158,9 +159,7 @@ export default function JobsList({ jobs }: { jobs: Job[] }) {
 
             <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-line bg-ivory px-6 py-5 sm:px-10">
               <span className="text-sm text-muted">Questions? careers@noahlegal.com</span>
-              <a href={job.applyUrl || "mailto:careers@noahlegal.com"} className="btn bg-navy px-7 text-ivory hover:text-gold">
-                Apply for this role
-              </a>
+              <Button href={job.applyUrl || "mailto:careers@noahlegal.com"}>Apply for this role</Button>
             </footer>
           </aside>
         </div>

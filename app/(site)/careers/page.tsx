@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import JobsList from "@/components/JobsList";
 import NavyHeader from "@/components/NavyHeader";
 import { Accent, Picture } from "@/components/ui";
 import { getJobs } from "@/lib/content";
+import Button from "@/components/Button";
 
 export const metadata: Metadata = { title: "Careers" };
 
@@ -29,9 +29,9 @@ export default async function CareersPage() {
           </div>
           <div className="flex min-w-0 flex-[1_1_320px] flex-col gap-7 pb-2">
             <p className="text-lg leading-relaxed text-muted-light">Real responsibility early, partners who teach, and matters that shape industries.</p>
-            <a href="#roles" className="btn self-start bg-gold text-navy hover:text-navy">
+            <Button variant="gold" href="#roles" className="self-start">
               See open roles
-            </a>
+            </Button>
           </div>
         </div>
         <div className="container-site pt-[72px]">
@@ -79,9 +79,7 @@ export default async function CareersPage() {
             </h2>
             <p className="text-[17px] leading-relaxed text-muted">Send your CV and a short note to [careers@noahlegal.com].</p>
           </div>
-          <Link href="mailto:careers@noahlegal.com" className="btn min-h-[52px] bg-navy px-7 text-ivory hover:text-gold">
-            Send your CV
-          </Link>
+          <Button href="mailto:careers@noahlegal.com">Send your CV</Button>
         </section>
       </main>
     </>

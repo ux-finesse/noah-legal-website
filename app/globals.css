@@ -24,12 +24,6 @@
   .display {
     @apply font-serif font-normal leading-none tracking-[-0.02em];
   }
-  .btn {
-    @apply inline-flex min-h-[48px] items-center justify-center px-6 text-[15px] font-bold no-underline transition-colors;
-  }
-  .link-arrow {
-    @apply inline-flex min-h-[44px] items-center gap-2.5 border-b border-current text-[15px] font-bold no-underline;
-  }
   .placeholder-box {
     @apply flex items-center justify-center text-[13px] tracking-[0.08em];
   }

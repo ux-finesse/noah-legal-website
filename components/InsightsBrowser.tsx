@@ -7,6 +7,7 @@ import { formatDate } from "@/lib/format";
 import type { InsightCard } from "@/lib/types";
 
 import { Picture } from "./ui";
+import Button from "./Button";
 
 const tabs = [
   { label: "All", kinds: null },
@@ -48,7 +49,11 @@ export default function InsightsBrowser({ insights }: { insights: InsightCard[] 
         </div>
       </div>
 
-      {!lead && <p className="container-site py-24 text-lg text-muted" role="status">Nothing published here yet.</p>}
+      {!lead && (
+        <p className="container-site pb-28 pt-24 text-lg text-muted" role="status">
+          {insights.length === 0 ? "Our first insights are on the way. Subscribe below to get them by email." : "Nothing published in this category yet."}
+        </p>
+      )}
 
       {lead && (
         <section aria-label="Featured" className="container-site pt-24">
@@ -81,9 +86,9 @@ export default function InsightsBrowser({ insights }: { insights: InsightCard[] 
           </div>
           {rest.length > shown && (
             <div className="mt-16 flex justify-center">
-              <button type="button" onClick={() => setShown((n) => n + PAGE)} className="btn min-h-[52px] border border-navy px-8 text-navy">
+              <Button variant="outline" onClick={() => setShown((n) => n + PAGE)}>
                 Load more
-              </button>
+              </Button>
             </div>
           )}
         </section>

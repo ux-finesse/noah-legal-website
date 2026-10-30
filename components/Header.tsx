@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { Caret, MenuIcon } from "./icons";
+import Button from "./Button";
 
 type Area = { title: string; slug: string };
 
@@ -52,7 +53,7 @@ export default function Header({ areas }: { areas: Area[] }) {
     <div className="on-navy relative z-20 border-b border-ivory/15 text-ivory">
       <div className="container-site flex items-center justify-between gap-5 py-5 lg:py-6">
         <Link href="/" aria-label="NOAH LEGAL — home" className="block shrink-0">
-          <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} priority className="h-11 w-auto lg:h-[52px]" />
+          <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} priority className="h-11 w-auto lg:h-[42px]" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 text-[15px] font-medium lg:flex">
@@ -98,12 +99,9 @@ export default function Header({ areas }: { areas: Area[] }) {
           ))}
         </nav>
 
-        <Link
-          href="/contact"
-          className="hidden min-h-[44px] items-center border border-gold px-[22px] text-sm font-semibold tracking-[0.04em] text-ivory no-underline lg:inline-flex"
-        >
+        <Button variant="outline-gold" size="md" href="/contact" className="hidden tracking-[0.04em] lg:inline-flex">
           Book a consultation
-        </Link>
+        </Button>
 
         <button
           type="button"
@@ -137,9 +135,9 @@ export default function Header({ areas }: { areas: Area[] }) {
               {l.label}
             </Link>
           ))}
-          <Link href="/contact" className="btn mt-6 w-full bg-gold text-navy">
+          <Button variant="gold" href="/contact" className="mt-6 w-full">
             Book a consultation
-          </Link>
+          </Button>
         </nav>
       )}
     </div>

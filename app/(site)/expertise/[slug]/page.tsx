@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 
 import NavyHeader from "@/components/NavyHeader";
 import PortableBody from "@/components/PortableBody";
-import { ArrowRight } from "@/components/icons";
 import { CtaBand, PageHero } from "@/components/ui";
 import { formatDate, getInsights, getPeople, getPracticeArea, getPracticeAreas } from "@/lib/content";
+import { ArrowLink } from "@/components/Button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -34,9 +34,9 @@ export default async function PracticeAreaPage({ params }: Props) {
       <main>
         <section className="container-site flex flex-wrap gap-x-20 gap-y-12 py-24">
           <aside className="min-w-0 flex-[1_1_280px]">
-            <Link href="/expertise" className="link-arrow text-navy">
-              <ArrowRight className="h-4 w-4 rotate-180" /> All practice areas
-            </Link>
+            <ArrowLink href="/expertise" back>
+              All practice areas
+            </ArrowLink>
           </aside>
           <article className="min-w-0 max-w-[760px] flex-[999_1_560px] text-lg leading-[1.75] text-[#2A3350]">
             <PortableBody value={area.body} />
