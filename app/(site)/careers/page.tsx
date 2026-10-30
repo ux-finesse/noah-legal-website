@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import JobsList from "@/components/JobsList";
 import NavyHeader from "@/components/NavyHeader";
-import { ArrowRight } from "@/components/icons";
 import { Accent, Picture } from "@/components/ui";
 import { getJobs } from "@/lib/content";
 
@@ -68,24 +68,7 @@ export default async function CareersPage() {
                 {jobs.length} position{jobs.length === 1 ? "" : "s"} open
               </span>
             </div>
-            {jobs.length === 0 ? (
-              <p className="border-t border-[#B9B1A4] pt-8 text-lg text-muted">No open roles right now — we still welcome speculative applications.</p>
-            ) : (
-              <ul className="border-t border-[#B9B1A4]">
-                {jobs.map((j) => (
-                  <li key={j.title} className="border-b border-[#B9B1A4]">
-                    <a href={j.applyUrl || "mailto:careers@noahlegal.com"} className="flex flex-wrap items-center gap-x-8 gap-y-3 py-7 text-navy no-underline">
-                      <span className="flex-[999_1_320px] font-serif text-[28px]">{j.title}</span>
-                      <span className="flex-[1_1_140px] text-[15px] text-muted">{j.location}</span>
-                      <span className="flex-[1_1_140px] text-[15px] text-muted">{j.type}</span>
-                      <span className="inline-flex items-center gap-2 text-[15px] font-bold">
-                        Apply <ArrowRight />
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
+            <JobsList jobs={jobs} />
           </div>
         </section>
 

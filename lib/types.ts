@@ -50,7 +50,21 @@ export type Insight = InsightCard & {
   pdfUrl?: string;
 };
 
-export type Job = { title: string; location?: string; type?: string; applyUrl?: string };
+export type Job = {
+  title: string;
+  slug: string;
+  location?: string;
+  type?: string;
+  applyUrl?: string;
+  department?: string;
+  experience?: string;
+  closingDate?: string;
+  summary?: string;
+  description?: Body;
+  responsibilities?: string[];
+  requirements?: string[];
+  benefits?: string[];
+};
 
 export type Settings = {
   address: string;
