@@ -52,7 +52,7 @@ export default function Header({ areas }: { areas: Area[] }) {
     <div className="on-navy relative z-20 border-b border-ivory/15 text-ivory">
       <div className="container-site flex items-center justify-between gap-5 py-5 lg:py-6">
         <Link href="/" aria-label="NOAH LEGAL — home" className="block shrink-0">
-          <Image src="/media/noah-legal-logo-light.png" alt="NOAH LEGAL" width={119} height={52} priority className="h-11 w-auto lg:h-[52px]" />
+          <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} priority className="h-11 w-auto lg:h-[52px]" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-8 text-[15px] font-medium lg:flex">

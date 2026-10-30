@@ -12,7 +12,7 @@ export default function Footer({ settings, areas }: { settings: Settings; areas:
       <div className="container-site pb-10 pt-[88px]">
         <div className="flex flex-wrap gap-14 border-b border-ivory/15 pb-16">
           <div className="min-w-0 flex-[2_1_340px]">
-            <Image src="/media/noah-legal-logo-light.png" alt="NOAH LEGAL" width={119} height={52} className="mb-5 h-[52px] w-auto" />
+            <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} className="mb-5 h-[52px] w-auto" />
             <p className="mb-6 text-[15px] leading-relaxed">Legal updates and insights, delivered monthly.</p>
             <NewsletterForm />
           </div>
