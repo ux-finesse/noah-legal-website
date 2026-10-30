@@ -8,6 +8,7 @@ import NavyHeader from "@/components/NavyHeader";
 import PortableBody from "@/components/PortableBody";
 import { NewsletterForm } from "@/components/forms";
 import { formatDate, getInsight, getInsights } from "@/lib/content";
+import Button from "@/components/Button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -157,9 +158,9 @@ export default async function InsightPage({ params }: Props) {
               </>
             )}
             <div className="flex flex-col gap-6">
-              <Link href="/contact" className="btn self-start bg-navy text-ivory hover:text-gold">
+              <Button href="/contact" className="self-start">
                 Speak with a partner
-              </Link>
+              </Button>
               <NewsletterForm tone="light" />
             </div>
           </div>

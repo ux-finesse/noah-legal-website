@@ -16,15 +16,22 @@ import type { Insight, InsightCard, Job, Person, PracticeArea, Settings } from "
 
 const client = isSanityConfigured ? createClient({ projectId, dataset, apiVersion, useCdn: true }) : null;
 
-async function fetchOr<T>(query: string, params: Record<string, unknown>, fallback: T): Promise<T> {
+/**
+ * Sample content fills empty sections while the site is being built.
+ * On the live site set SAMPLE_CONTENT=off so an empty section shows its
+ * empty state (e.g. "No open roles") instead of fictional samples.
+ */
+const useSamples = process.env.SAMPLE_CONTENT !== "off";
+
+async function fetchOr<T>(query: string, params: Record<string, unknown>, sample: T): Promise<T> {
+  const fallback = (useSamples ? sample : Array.isArray(sample) ? [] : null) as T;
   if (!client) return fallback;
   try {
     const data = await client.fetch<T>(query, params, { next: { revalidate: 60 } });
-    // An empty Sanity list (nothing published yet) also falls back to sample content.
     if (data == null || (Array.isArray(data) && data.length === 0)) return fallback;
     return data;
   } catch (err) {
-    console.error("[sanity] query failed, using fallback content", err);
+    console.error("[sanity] query failed", err);
     return fallback;
   }
 }
