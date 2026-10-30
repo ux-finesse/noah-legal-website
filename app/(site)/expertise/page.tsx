@@ -18,7 +18,7 @@ export default async function ExpertisePage() {
         <PageHero
           eyebrow="Expertise"
           title={<>{areas.length} practices. <Accent>One</Accent> standard.</>}
-          intro="Partner-led teams that work across practices, so clients get one joined-up answer rather than twelve separate opinions."
+          intro="Partner-led teams that work across practices, so clients get one joined-up answer rather than a dozen separate opinions."
         />
       </NavyHeader>
       <main>

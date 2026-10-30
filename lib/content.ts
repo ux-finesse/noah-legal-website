@@ -20,7 +20,9 @@ async function fetchOr<T>(query: string, params: Record<string, unknown>, fallba
   if (!client) return fallback;
   try {
     const data = await client.fetch<T>(query, params, { next: { revalidate: 60 } });
-    return data ?? fallback;
+    // An empty Sanity list (nothing published yet) also falls back to sample content.
+    if (data == null || (Array.isArray(data) && data.length === 0)) return fallback;
+    return data;
   } catch (err) {
     console.error("[sanity] query failed, using fallback content", err);
     return fallback;
@@ -77,7 +79,13 @@ export function getInsight(slug: string): Promise<Insight | null> {
 }
 
 export function getJobs(): Promise<Job[]> {
-  return fetchOr(groq`*[_type == "job" && open == true] | order(_createdAt desc){title, location, type, applyUrl}`, {}, fallbackJobs);
+  return fetchOr(
+    groq`*[_type == "job" && open == true] | order(_createdAt desc){
+      title, "slug": coalesce(slug.current, _id), location, type, applyUrl, department, experience, closingDate,
+      summary, description, responsibilities, requirements, benefits}`,
+    {},
+    fallbackJobs,
+  );
 }
 
 export { formatDate } from "./format";

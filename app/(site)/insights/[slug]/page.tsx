@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -78,6 +79,12 @@ export default async function InsightPage({ params }: Props) {
           </div>
 
           <ArticleActions slug={insight.slug} title={insight.title} pdfUrl={insight.pdfUrl} />
+
+          {insight.imageUrl && (
+            <figure className="relative -mx-6 mb-12 aspect-[16/9] overflow-hidden bg-stone sm:mx-0">
+              <Image src={insight.imageUrl} alt="" fill priority sizes="(min-width: 768px) 720px, 100vw" className="object-cover" />
+            </figure>
+          )}
 
           <PortableBody value={insight.body} />
 
