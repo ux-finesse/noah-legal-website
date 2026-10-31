@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Button from "./Button";
+import Select, { fieldClass } from "./Select";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -40,7 +41,7 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
         type="email"
         required
         placeholder="Email address"
-        className={`min-h-[48px] min-w-0 flex-[1_1_220px] px-4 text-[15px] ${
+        className={`min-h-[48px] min-w-0 flex-[1_1_220px] rounded-md px-4 text-[15px] focus:outline-none focus:ring-2 focus:ring-gold/40 ${
           dark ? "border border-ivory/30 bg-transparent text-ivory placeholder:text-muted-lighter" : "border border-[#B9B1A4] bg-white text-navy"
         }`}
       />
@@ -56,7 +57,7 @@ export function NewsletterForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
   );
 }
 
-const field = "min-h-[52px] border border-[#B9B1A4] bg-white px-4 text-base text-navy";
+const field = `${fieldClass} min-h-[52px] text-base`;
 
 export function ContactForm({ areas }: { areas: string[] }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -103,19 +104,16 @@ export function ContactForm({ areas }: { areas: string[] }) {
           <input id="c-phone" name="phone" type="tel" className={field} />
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="c-practice" className="text-sm font-semibold">Area of interest</label>
-        <select id="c-practice" name="practice" className={`${field} px-3`} defaultValue="">
-          <option value="" disabled>Select a practice area</option>
-          {areas.map((a) => (
-            <option key={a}>{a}</option>
-          ))}
-          <option>Other</option>
-        </select>
-      </div>
+      <Select
+        id="c-practice"
+        name="practice"
+        label="Area of interest"
+        placeholder="Select a practice area"
+        options={[...areas, "Other"].map((a) => ({ value: a, label: a }))}
+      />
       <div className="flex flex-col gap-2">
         <label htmlFor="c-msg" className="text-sm font-semibold">How can we help?</label>
-        <textarea id="c-msg" name="message" rows={6} required className="resize-y border border-[#B9B1A4] bg-white px-4 py-3.5 text-base text-navy" />
+        <textarea id="c-msg" name="message" rows={6} required className={`${fieldClass} resize-y py-3.5 text-base`} />
       </div>
       <label className="flex items-start gap-3 text-sm leading-normal text-muted">
         <input type="checkbox" name="consent" required className="mt-0.5 h-5 w-5 shrink-0" />

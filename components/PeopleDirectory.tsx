@@ -5,9 +5,10 @@ import { useMemo, useState } from "react";
 
 import type { Person } from "@/lib/types";
 
+import Select, { fieldClass } from "./Select";
 import { Picture } from "./ui";
 
-const field = "w-full min-w-0 min-h-[48px] border border-[#B9B1A4] bg-white px-4 text-[15px] text-navy";
+const field = `${fieldClass} min-h-[48px] text-[15px]`;
 
 export default function PeopleDirectory({ people, practices }: { people: Person[]; practices: string[] }) {
   const [q, setQ] = useState("");
@@ -31,24 +32,26 @@ export default function PeopleDirectory({ people, practices }: { people: Person[
           <label htmlFor="p-search" className="text-[13px] font-semibold text-muted">Search by name</label>
           <input id="p-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} className={field} />
         </div>
-        <div className="flex min-w-0 flex-[1_1_220px] flex-col gap-2">
-          <label htmlFor="p-practice" className="text-[13px] font-semibold text-muted">Practice area</label>
-          <select id="p-practice" value={practice} onChange={(e) => setPractice(e.target.value)} className={`${field} px-3`}>
-            <option value="">All practices</option>
-            {practices.map((p) => (
-              <option key={p}>{p}</option>
-            ))}
-          </select>
-        </div>
-        <div className="flex min-w-0 flex-[1_1_220px] flex-col gap-2">
-          <label htmlFor="p-role" className="text-[13px] font-semibold text-muted">Role</label>
-          <select id="p-role" value={role} onChange={(e) => setRole(e.target.value)} className={`${field} px-3`}>
-            <option value="">All roles</option>
-            {roles.map((r) => (
-              <option key={r}>{r}</option>
-            ))}
-          </select>
-        </div>
+        <Select
+          id="p-practice"
+          label="Practice area"
+          size="md"
+          labelClassName="text-[13px] font-semibold text-muted"
+          className="min-w-0 flex-[1_1_220px]"
+          value={practice}
+          onChange={setPractice}
+          options={[{ value: "", label: "All practices" }, ...practices.map((p) => ({ value: p, label: p }))]}
+        />
+        <Select
+          id="p-role"
+          label="Role"
+          size="md"
+          labelClassName="text-[13px] font-semibold text-muted"
+          className="min-w-0 flex-[1_1_220px]"
+          value={role}
+          onChange={setRole}
+          options={[{ value: "", label: "All roles" }, ...roles.map((r) => ({ value: r, label: r }))]}
+        />
       </section>
 
       {filtered.length === 0 && (
