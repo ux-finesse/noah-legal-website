@@ -16,6 +16,7 @@ export default function Footer({ settings, areas }: { settings: Settings; areas:
             <p className="mb-6 text-[15px] leading-relaxed">Legal updates and insights, delivered monthly.</p>
             <NewsletterForm />
           </div>
+          {areas.length > 0 && (
           <nav aria-label="Practice areas" className="flex flex-[1_1_200px] flex-col gap-3 text-[15px]">
             <span className="mb-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-ivory">Expertise</span>
             {areas.slice(0, 5).map((a) => (
@@ -24,6 +25,7 @@ export default function Footer({ settings, areas }: { settings: Settings; areas:
               </Link>
             ))}
           </nav>
+          )}
           <nav aria-label="Firm" className="flex flex-[1_1_160px] flex-col gap-3 text-[15px]">
             <span className="mb-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-ivory">Firm</span>
             <Link href="/firm" className="text-muted-light no-underline">About</Link>

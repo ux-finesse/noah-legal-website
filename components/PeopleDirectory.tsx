@@ -51,7 +51,11 @@ export default function PeopleDirectory({ people, practices }: { people: Person[
         </div>
       </section>
 
-      {filtered.length === 0 && <p className="container-site py-20 text-lg text-muted" role="status">No one matches those filters.</p>}
+      {filtered.length === 0 && (
+        <p className="container-site pb-28 pt-20 text-lg text-muted" role="status">
+          {people.length === 0 ? "Profiles of our team will be published here shortly." : "No one matches those filters."}
+        </p>
+      )}
       <Group title="Partners" people={partners} />
       <Group title="Associates" people={others} last />
     </>
