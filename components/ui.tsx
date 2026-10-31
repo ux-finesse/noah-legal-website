@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import Button, { ArrowLink } from "./Button";
 
@@ -7,9 +8,12 @@ export function PageHero({
   eyebrow,
   title,
   intro,
+  breadcrumb,
   children,
 }: {
   eyebrow: string;
+  /** Optional trail shown above the title instead of the eyebrow, e.g. [{ label: "Expertise", href: "/expertise" }, { label: "Taxation" }]. */
+  breadcrumb?: { label: string; href?: string }[];
   title: React.ReactNode;
   intro?: string;
   children?: React.ReactNode;
@@ -17,7 +21,26 @@ export function PageHero({
   return (
     <div className="container-site flex flex-wrap items-end gap-x-20 gap-y-10 pb-24 pt-16 lg:pb-28 lg:pt-24">
       <div className="min-w-0 flex-[999_1_560px]">
-        <p className="eyebrow mb-6 text-gold">{eyebrow}</p>
+        {breadcrumb ? (
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold uppercase tracking-eyebrow">
+              {breadcrumb.map((c, i) => (
+                <li key={c.label} className="flex items-center gap-2">
+                  {i > 0 && <span aria-hidden="true" className="text-muted-lighter">/</span>}
+                  {c.href ? (
+                    <Link href={c.href} className="text-muted-light no-underline">
+                      {c.label}
+                    </Link>
+                  ) : (
+                    <span aria-current="page" className="text-gold">{c.label}</span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : (
+          <p className="eyebrow mb-6 text-gold">{eyebrow}</p>
+        )}
         <h1 className="display text-[clamp(44px,6vw,88px)]">{title}</h1>
       </div>
       {intro && <p className="min-w-0 flex-[1_1_320px] text-lg leading-relaxed text-muted-light">{intro}</p>}
@@ -58,7 +81,7 @@ export function SectionHead({
   );
 }
 
-/** Sanity image if present, otherwise a labelled placeholder box. */
+/** Sanity image if present, otherwise a labelled placeholder box. Both have rounded-md corners. */
 export function Picture({
   src,
   alt,
@@ -76,23 +99,28 @@ export function Picture({
 }) {
   if (src) {
     return (
-      <span className={`relative block overflow-hidden ${className}`}>
+      <span className={`relative block overflow-hidden rounded-md ${className}`}>
         <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
       </span>
     );
   }
   return (
-    <span role="img" aria-label={alt} className={`placeholder-box ${dark ? "bg-navy-800 text-[#8E95AA]" : "bg-stone text-[#5E625F]"} ${className}`}>
+    <span role="img" aria-label={alt} className={`placeholder-box rounded-md ${dark ? "bg-navy-800 text-[#8E95AA]" : "bg-stone text-[#5E625F]"} ${className}`}>
       {label}
     </span>
   );
 }
 
-export function CtaBand({ title }: { title: React.ReactNode }) {
+/** Grey closing band with a consultation button. `divider` adds a hairline on top when it follows another grey section. */
+export function CtaBand({ title, divider = false }: { title: React.ReactNode; divider?: boolean }) {
   return (
-    <section className="container-site flex flex-wrap items-end gap-x-20 gap-y-10 py-28">
-      <h2 className="display min-w-0 flex-[999_1_600px] text-[clamp(36px,4.6vw,64px)] leading-[1.05]">{title}</h2>
-      <Button href="/contact">Book a consultation</Button>
+    <section className="bg-sand">
+      <div className="container-site">
+        <div className={`flex flex-wrap items-end gap-x-20 gap-y-10 py-28 ${divider ? "border-t border-line" : ""}`}>
+          <h2 className="display min-w-0 flex-[999_1_600px] text-[clamp(36px,4.6vw,64px)] leading-[1.05]">{title}</h2>
+          <Button href="/contact">Book a consultation</Button>
+        </div>
+      </div>
     </section>
   );
 }

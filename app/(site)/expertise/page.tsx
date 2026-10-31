@@ -60,7 +60,7 @@ export default async function ExpertisePage() {
           </div>
         </section>
 
-        <CtaBand title={<>Not sure which practice fits? <span className="italic text-gold-ink">Start with a conversation.</span></>} />
+        <CtaBand divider title={<>Not sure which practice fits? <span className="italic text-gold-ink">Start with a conversation.</span></>} />
       </main>
     </>
   );

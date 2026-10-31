@@ -6,7 +6,6 @@ import NavyHeader from "@/components/NavyHeader";
 import PortableBody from "@/components/PortableBody";
 import { CtaBand, PageHero } from "@/components/ui";
 import { formatDate, getInsights, getPeople, getPracticeArea, getPracticeAreas } from "@/lib/content";
-import { ArrowLink } from "@/components/Button";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PracticeAreaPage({ params }: Props) {
   const { slug } = await params;
-  const [area, people, insights] = await Promise.all([getPracticeArea(slug), getPeople(), getInsights()]);
+  const [area, people, insights, areas] = await Promise.all([getPracticeArea(slug), getPeople(), getInsights(), getPracticeAreas()]);
   if (!area) notFound();
   const team = people.filter((p) => p.practices?.some((x) => x.slug === slug) || p.practice === area.title).slice(0, 4);
   const related = insights.filter((i) => i.practice?.slug === slug).slice(0, 3);
@@ -29,16 +28,42 @@ export default async function PracticeAreaPage({ params }: Props) {
   return (
     <>
       <NavyHeader>
-        <PageHero eyebrow="Expertise" title={area.title} intro={area.summary} />
+        <PageHero
+          eyebrow="Expertise"
+          breadcrumb={[{ label: "Expertise", href: "/expertise" }, { label: area.title }]}
+          title={area.title}
+          intro={area.summary}
+        />
       </NavyHeader>
       <main>
         <section className="container-site flex flex-wrap gap-x-20 gap-y-12 py-24">
-          <aside className="min-w-0 flex-[1_1_280px]">
-            <ArrowLink href="/expertise" back>
-              All practice areas
-            </ArrowLink>
+          <aside className="order-2 min-w-0 flex-[1_1_280px] self-start lg:sticky lg:top-8 lg:order-1">
+            {areas.length > 1 && (
+              <nav aria-label="Practice areas" className="border-t border-navy pt-5">
+                <p className="eyebrow mb-3 text-gold-ink">Practice areas</p>
+                <ul className="flex flex-col">
+                  {areas.map((a) => {
+                    const current = a.slug === slug;
+                    return (
+                      <li key={a.slug}>
+                        <Link
+                          href={`/expertise/${a.slug}`}
+                          aria-current={current ? "page" : undefined}
+                          className={`flex min-h-[44px] items-center border-b border-line py-2 text-[15px] no-underline transition-colors ${
+                            current ? "font-semibold text-gold-ink" : "text-navy"
+                          }`}
+                        >
+                          <span aria-hidden="true" className={`h-px shrink-0 bg-gold-ink transition-all ${current ? "mr-3 w-4" : "mr-0 w-0"}`} />
+                          {a.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+            )}
           </aside>
-          <article className="min-w-0 max-w-[760px] flex-[999_1_560px] text-lg leading-[1.75] text-[#2A3350]">
+          <article className="order-1 min-w-0 max-w-[760px] flex-[999_1_560px] lg:order-2 text-lg leading-[1.75] text-[#2A3350]">
             <PortableBody value={area.body} />
           </article>
         </section>
@@ -75,7 +100,7 @@ export default async function PracticeAreaPage({ params }: Props) {
           </section>
         )}
 
-        <CtaBand title={<>Talk to our {area.title} team.</>} />
+        <CtaBand divider={team.length > 0 && related.length === 0} title={<>Talk to our {area.title} team.</>} />
       </main>
     </>
   );
