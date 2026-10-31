@@ -195,7 +195,7 @@ export default async function InsightPage({ params }: Props) {
               <div className="flex flex-wrap gap-6">
                 {more.map((m) => (
                   <Link key={m.slug} href={`/insights/${m.slug}`} className="flex min-w-0 flex-[1_1_320px] flex-col gap-4 text-navy no-underline">
-                    <Picture src={m.imageUrl} alt={m.title} label="[IMAGE]" className="h-[220px] rounded-md" sizes="(min-width: 1024px) 33vw, 100vw" />
+                    <Picture src={m.imageUrl} alt={m.title} label="[IMAGE]" className="h-[220px]" sizes="(min-width: 1024px) 33vw, 100vw" />
                     <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-ink">
                       {m.kind} · {formatDate(m.publishedAt)}
                     </span>
