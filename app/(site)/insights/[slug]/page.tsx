@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import ArticleActions from "@/components/ArticleActions";
 import NavyHeader from "@/components/NavyHeader";
 import PortableBody from "@/components/PortableBody";
+import ReadingProgress from "@/components/ReadingProgress";
 import { NewsletterForm } from "@/components/forms";
 import { formatDate, getInsight, getInsights } from "@/lib/content";
 import Button from "@/components/Button";
@@ -45,8 +46,9 @@ export default async function InsightPage({ params }: Props) {
   return (
     <>
       <NavyHeader />
+      <ReadingProgress targetId="article" />
       <main>
-        <article className="mx-auto max-w-[720px] px-6 pb-24 pt-[72px] text-lg leading-[1.75] text-[#2A3350]">
+        <article id="article" className="mx-auto max-w-[720px] px-6 pb-24 pt-[72px] text-lg leading-[1.75] text-[#2A3350]">
           <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap gap-2 text-xs text-muted">
             <Link href="/insights" className="text-muted no-underline">Insights</Link>
             {insight.practice && (
@@ -82,7 +84,7 @@ export default async function InsightPage({ params }: Props) {
           <ArticleActions slug={insight.slug} title={insight.title} pdfUrl={insight.pdfUrl} />
 
           {insight.imageUrl && (
-            <figure className="relative -mx-6 mb-12 aspect-[16/9] overflow-hidden bg-stone sm:mx-0">
+            <figure className="relative mb-12 aspect-[16/9] overflow-hidden rounded-md bg-stone">
               <Image src={insight.imageUrl} alt="" fill priority sizes="(min-width: 768px) 720px, 100vw" className="object-cover" />
             </figure>
           )}

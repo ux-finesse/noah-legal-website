@@ -122,7 +122,7 @@ export default async function HomePage() {
               <SectionHead dark eyebrow="Insights" title={<>Thinking ahead of <Accent>the market</Accent></>} href="/insights" linkLabel="All insights" />
               <div className="flex flex-wrap gap-6">
                 <Link href={`/insights/${lead.slug}`} className="flex min-w-0 flex-[999_1_520px] flex-col gap-5 text-ivory no-underline">
-                  <Picture src={lead.imageUrl} alt={lead.title} label="[FEATURE IMAGE]" className="h-80" dark />
+                  <Picture src={lead.imageUrl} alt={lead.title} label="[FEATURE IMAGE]" className="h-80 rounded-md" dark />
                   <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-lighter">
                     {lead.kind} · {formatDate(lead.publishedAt)}
                   </span>

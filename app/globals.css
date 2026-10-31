@@ -6,10 +6,11 @@
   body {
     @apply bg-ivory font-sans text-navy antialiased;
   }
-  a:hover {
+  /* Buttons (.btn) set their own hover colours, so these link rules skip them. */
+  a:not(.btn):hover {
     color: theme("colors.gold.ink");
   }
-  .on-navy a:hover {
+  .on-navy a:not(.btn):hover {
     color: theme("colors.gold.DEFAULT");
   }
 }
