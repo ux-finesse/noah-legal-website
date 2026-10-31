@@ -58,7 +58,7 @@ export default function InsightsBrowser({ insights }: { insights: InsightCard[] 
       {lead && (
         <section aria-label="Featured" className="container-site pt-24">
           <Link href={`/insights/${lead.slug}`} className="flex flex-wrap items-center gap-x-14 gap-y-10 text-navy no-underline">
-            <Picture src={lead.imageUrl} alt={lead.title} label="[FEATURED IMAGE]" className="h-[300px] min-w-0 flex-[999_1_560px] rounded-md sm:h-[420px]" />
+            <Picture src={lead.imageUrl} alt={lead.title} label="[FEATURED IMAGE]" className="h-[300px] min-w-0 flex-[999_1_560px] sm:h-[420px]" />
             <span className="flex min-w-0 flex-[1_1_360px] flex-col gap-5">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-ink">
                 Featured · {lead.kind} · {formatDate(lead.publishedAt)}
@@ -73,10 +73,10 @@ export default function InsightsBrowser({ insights }: { insights: InsightCard[] 
       {rest.length > 0 && (
         <section aria-label="Latest" className="container-site pb-28 pt-24">
           <h2 className="mb-8 border-b border-line pb-4 font-serif text-4xl">Latest</h2>
-          <div className="flex flex-wrap gap-x-6 gap-y-12">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-x-6 gap-y-12">
             {rest.slice(0, shown).map((i) => (
-              <Link key={i.slug} href={`/insights/${i.slug}`} className="flex min-w-0 flex-[1_1_360px] flex-col gap-4 text-navy no-underline">
-                <Picture src={i.imageUrl} alt={i.title} label="[IMAGE]" className="h-[220px] rounded-md" sizes="(min-width: 1024px) 33vw, 100vw" />
+              <Link key={i.slug} href={`/insights/${i.slug}`} className="flex min-w-0 flex-col gap-4 text-navy no-underline">
+                <Picture src={i.imageUrl} alt={i.title} label="[IMAGE]" className="h-[220px]" sizes="(min-width: 1024px) 33vw, 100vw" />
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-ink">
                   {i.kind} · {formatDate(i.publishedAt)}
                 </span>

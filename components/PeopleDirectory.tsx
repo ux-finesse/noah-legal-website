@@ -59,8 +59,12 @@ export default function PeopleDirectory({ people, practices }: { people: Person[
           {people.length === 0 ? "Profiles of our team will be published here shortly." : "No one matches those filters."}
         </p>
       )}
-      <Group title="Partners" people={partners} />
-      <Group title="Associates" people={others} last />
+      {filtered.length > 0 && (
+        <div className="pb-28">
+          <Group title="Partners" people={partners} />
+          <Group title="Associates" people={others} last />
+        </div>
+      )}
     </>
   );
 }
@@ -68,11 +72,11 @@ export default function PeopleDirectory({ people, practices }: { people: Person[
 function Group({ title, people, last = false }: { title: string; people: Person[]; last?: boolean }) {
   if (!people.length) return null;
   return (
-    <section aria-label={title} className={`container-site ${last ? "pb-28 pt-24" : "pt-[72px]"}`}>
+    <section aria-label={title} className={`container-site ${last ? "pt-24" : "pt-[72px]"}`}>
       <h2 className="mb-8 border-b border-line pb-4 font-serif text-4xl">{title}</h2>
-      <div className="flex flex-wrap gap-x-6 gap-y-10">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] gap-x-6 gap-y-10">
         {people.map((p) => (
-          <Link key={p.slug} href={`/people/${p.slug}`} className="flex min-w-0 flex-[1_1_260px] flex-col gap-4 text-navy no-underline">
+          <Link key={p.slug} href={`/people/${p.slug}`} className="flex min-w-0 flex-col gap-4 text-navy no-underline">
             <Picture src={p.portraitUrl} alt={`Portrait of ${p.name}`} label="[PORTRAIT]" className="aspect-[4/5]" sizes="(min-width: 1024px) 25vw, 100vw" />
             <span className="flex flex-col gap-1">
               <span className="font-serif text-2xl">{p.name}</span>
