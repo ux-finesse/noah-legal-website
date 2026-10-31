@@ -9,7 +9,8 @@ import PortableBody from "@/components/PortableBody";
 import ReadingProgress from "@/components/ReadingProgress";
 import { NewsletterForm } from "@/components/forms";
 import { formatDate, getInsight, getInsights } from "@/lib/content";
-import Button from "@/components/Button";
+import Button, { ArrowLink } from "@/components/Button";
+import { Picture } from "@/components/ui";
 import { ArrowRight } from "@/components/icons";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -41,7 +42,10 @@ export default async function InsightPage({ params }: Props) {
   const { slug } = await params;
   const [insight, all] = await Promise.all([getInsight(slug), getInsights()]);
   if (!insight) notFound();
-  const more = all.filter((i) => i.slug !== slug && (!insight.practice || i.practice?.slug === insight.practice.slug)).slice(0, 3);
+  // Related: same practice area first, topped up with the latest others so there are always 3.
+  const others = all.filter((i) => i.slug !== slug);
+  const samePractice = insight.practice ? others.filter((i) => i.practice?.slug === insight.practice?.slug) : [];
+  const more = [...samePractice, ...others.filter((i) => !samePractice.includes(i))].slice(0, 3);
   const authors = insight.authors ?? [];
   // Insights are sorted newest first: "previous" is the older article, "next" the newer one.
   const idx = all.findIndex((i) => i.slug === slug);
@@ -53,7 +57,7 @@ export default async function InsightPage({ params }: Props) {
       <NavyHeader />
       <ReadingProgress targetId="article" />
       <main>
-        <article id="article" className="mx-auto max-w-[720px] px-6 pb-24 pt-[72px] text-lg leading-[1.75] text-[#2A3350]">
+        <article id="article" className="mx-auto max-w-[1024px] px-6 pb-24 pt-[72px] text-lg leading-[1.75] text-[#2A3350]">
           <nav aria-label="Breadcrumb" className="mb-8 flex flex-wrap gap-2 text-xs text-muted">
             <Link href="/insights" className="text-muted no-underline">Insights</Link>
             {insight.practice && (
@@ -176,31 +180,39 @@ export default async function InsightPage({ params }: Props) {
           )}
         </article>
 
-        <section className="border-t border-[#DCD8CE]">
-          <div className="mx-auto max-w-[720px] px-6 pb-20 pt-16">
-            {more.length > 0 && (
-              <>
-                <h2 className="mb-6 font-serif text-[32px] font-normal leading-tight text-navy">
-                  More on {insight.practice?.title ?? "this topic"}
+        {more.length > 0 && (
+          <section aria-labelledby="more-heading" className="bg-sand">
+            <div className="container-site py-24 lg:py-[104px]">
+              <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+                <h2 id="more-heading" className="display text-[clamp(40px,4.4vw,60px)]">
+                  More on <span className="italic text-gold-ink">{samePractice.length ? insight.practice?.title : "this topic"}</span>
                 </h2>
-                <ul className="mb-8 border-t border-[#DCD8CE]">
-                  {more.map((m) => (
-                    <li key={m.slug} className="border-b border-[#DCD8CE]">
-                      <Link href={`/insights/${m.slug}`} className="flex flex-wrap justify-between gap-x-6 gap-y-1 py-[18px] text-navy no-underline">
-                        <span className="text-[17px]">{m.title}</span>
-                        <span className="text-xs text-muted">{formatDate(m.publishedAt)}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-            <div className="flex flex-col gap-6">
-              <Button href="/contact" className="self-start">
-                Speak with a partner
-              </Button>
-              <NewsletterForm tone="light" />
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+                  <Button href="/contact">Speak with a partner</Button>
+                  <ArrowLink href="/insights">All insights</ArrowLink>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-6">
+                {more.map((m) => (
+                  <Link key={m.slug} href={`/insights/${m.slug}`} className="flex min-w-0 flex-[1_1_320px] flex-col gap-4 text-navy no-underline">
+                    <Picture src={m.imageUrl} alt={m.title} label="[IMAGE]" className="h-[220px] rounded-md" sizes="(min-width: 1024px) 33vw, 100vw" />
+                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-ink">
+                      {m.kind} · {formatDate(m.publishedAt)}
+                    </span>
+                    <span className="font-serif text-[28px] leading-[1.15]">{m.title}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
+          </section>
+        )}
+
+        <section aria-label="Subscribe" className="container-site flex flex-wrap items-center gap-x-20 gap-y-8 py-[88px]">
+          <h2 className="display min-w-0 flex-[999_1_480px] text-[clamp(32px,3.6vw,48px)] leading-[1.1]">
+            Get insights like this <span className="italic text-gold-ink">in your inbox.</span>
+          </h2>
+          <div className="min-w-0 flex-[1_1_380px]">
+            <NewsletterForm tone="light" />
           </div>
         </section>
       </main>
