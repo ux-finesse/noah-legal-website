@@ -14,7 +14,8 @@ import {
 } from "./fallback";
 import type { Insight, InsightCard, Job, Person, PracticeArea, Settings } from "./types";
 
-const sampleCareersImage = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=70";
+// Sample: team meeting in a Lagos conference room — Ninthgrid on Unsplash (free licence).
+const sampleCareersImage = "https://images.unsplash.com/photo-1739298061707-cefee19941b7?auto=format&fit=crop&w=2000&q=70";
 
 /** Sanity returns null for empty fields; drop them so fallbacks still apply. */
 function stripNulls<T extends object>(obj: T): Partial<T> {
