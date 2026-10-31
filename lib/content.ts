@@ -14,6 +14,13 @@ import {
 } from "./fallback";
 import type { Insight, InsightCard, Job, Person, PracticeArea, Settings } from "./types";
 
+const sampleCareersImage = "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=70";
+
+/** Sanity returns null for empty fields; drop them so fallbacks still apply. */
+function stripNulls<T extends object>(obj: T): Partial<T> {
+  return Object.fromEntries(Object.entries(obj).filter(([, v]) => v != null)) as Partial<T>;
+}
+
 const client = isSanityConfigured ? createClient({ projectId, dataset, apiVersion, useCdn: true }) : null;
 
 /**
@@ -40,8 +47,14 @@ const personLite = groq`name, "slug": slug.current, role, "practice": practiceAr
 const insightCard = groq`title, "slug": slug.current, kind, publishedAt, standfirst, featured, "imageUrl": image.asset->url, "practice": practiceArea->{title, "slug": slug.current}`;
 
 export async function getSettings(): Promise<Settings> {
-  const data = await fetchOr<Partial<Settings> | null>(groq`*[_type == "siteSettings"][0]`, {}, null);
-  return { ...fallbackSettings, ...(data ?? {}) };
+  const data = await fetchOr<Partial<Settings> | null>(
+    groq`*[_type == "siteSettings"][0]{..., "careersImageUrl": careersImage.asset->url, "careersImageAlt": careersImage.alt}`,
+    {},
+    null,
+  );
+  // The sample careers photo only shows while SAMPLE_CONTENT is on.
+  const sample = useSamples ? { careersImageUrl: sampleCareersImage } : {};
+  return { ...fallbackSettings, ...sample, ...stripNulls(data ?? {}) };
 }
 
 export function getPracticeAreas(): Promise<PracticeArea[]> {

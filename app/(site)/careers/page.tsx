@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import JobsList from "@/components/JobsList";
 import NavyHeader from "@/components/NavyHeader";
 import { Accent, Picture } from "@/components/ui";
-import { getJobs } from "@/lib/content";
+import { getJobs, getSettings } from "@/lib/content";
 import Button from "@/components/Button";
 
 export const metadata: Metadata = { title: "Careers" };
@@ -16,7 +16,7 @@ const perks = [
 ];
 
 export default async function CareersPage() {
-  const jobs = await getJobs();
+  const [jobs, settings] = await Promise.all([getJobs(), getSettings()]);
   return (
     <>
       <NavyHeader>
@@ -35,7 +35,14 @@ export default async function CareersPage() {
           </div>
         </div>
         <div className="container-site pt-[72px]">
-          <Picture alt="Team at work" label="[TEAM PHOTO]" className="h-[260px] border border-dashed border-ivory/20 sm:h-[400px]" dark />
+          <Picture
+            src={settings.careersImageUrl}
+            alt={settings.careersImageAlt || "The NOAH LEGAL team at work"}
+            label="[TEAM PHOTO]"
+            className={`h-[260px] sm:h-[400px] ${settings.careersImageUrl ? "" : "border border-dashed border-ivory/20"}`}
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            dark
+          />
         </div>
         <div className="h-24 bg-[linear-gradient(#16213D_0_50%,#F5F3EF_50%_100%)]" />
       </NavyHeader>

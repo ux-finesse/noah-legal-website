@@ -79,4 +79,6 @@ export type Settings = {
   officeCount: string;
   firmIntro: string;
   managingPartnerQuote: string;
+  careersImageUrl?: string;
+  careersImageAlt?: string;
 };
