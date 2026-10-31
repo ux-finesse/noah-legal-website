@@ -10,6 +10,7 @@ import ReadingProgress from "@/components/ReadingProgress";
 import { NewsletterForm } from "@/components/forms";
 import { formatDate, getInsight, getInsights } from "@/lib/content";
 import Button from "@/components/Button";
+import { ArrowRight } from "@/components/icons";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,6 +43,10 @@ export default async function InsightPage({ params }: Props) {
   if (!insight) notFound();
   const more = all.filter((i) => i.slug !== slug && (!insight.practice || i.practice?.slug === insight.practice.slug)).slice(0, 3);
   const authors = insight.authors ?? [];
+  // Insights are sorted newest first: "previous" is the older article, "next" the newer one.
+  const idx = all.findIndex((i) => i.slug === slug);
+  const prev = idx >= 0 ? all[idx + 1] : undefined;
+  const next = idx > 0 ? all[idx - 1] : undefined;
 
   return (
     <>
@@ -138,6 +143,37 @@ export default async function InsightPage({ params }: Props) {
           <p className="mt-12 border-t border-[#DCD8CE] pt-5 text-[13px] leading-relaxed text-muted">
             This article is for general information only and is not legal advice.
           </p>
+
+          {(prev || next) && (
+            <nav aria-label="More articles" className="mt-12 flex flex-wrap gap-4">
+              {prev && (
+                <Link
+                  href={`/insights/${prev.slug}`}
+                  rel="prev"
+                  className="group flex min-w-0 flex-[1_1_260px] flex-col gap-2 rounded-md border border-[#DCD8CE] p-5 text-navy no-underline transition-colors hover:border-navy"
+                >
+                  <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-gold-ink">
+                    <ArrowRight className="h-3.5 w-3.5 rotate-180 transition-transform group-hover:-translate-x-0.5" />
+                    Previous
+                  </span>
+                  <span className="font-serif text-xl leading-snug">{prev.title}</span>
+                </Link>
+              )}
+              {next && (
+                <Link
+                  href={`/insights/${next.slug}`}
+                  rel="next"
+                  className="group ml-auto flex min-w-0 flex-[1_1_260px] flex-col items-end gap-2 rounded-md border border-[#DCD8CE] p-5 text-right text-navy no-underline transition-colors hover:border-navy"
+                >
+                  <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-gold-ink">
+                    Next
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                  <span className="font-serif text-xl leading-snug">{next.title}</span>
+                </Link>
+              )}
+            </nav>
+          )}
         </article>
 
         <section className="border-t border-[#DCD8CE]">
