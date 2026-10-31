@@ -19,6 +19,10 @@
   .container-site {
     @apply mx-auto w-full max-w-site px-5 sm:px-8;
   }
+  /* Header and footer: wider than the page content, so they sit closer to the screen edges. */
+  .container-wide {
+    @apply mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12;
+  }
   .eyebrow {
     @apply text-[13px] font-semibold uppercase tracking-eyebrow;
   }

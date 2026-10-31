@@ -9,7 +9,7 @@ export default function Footer({ settings, areas }: { settings: Settings; areas:
   const year = new Date().getFullYear();
   return (
     <footer className="on-navy bg-navy text-muted-light">
-      <div className="container-site pb-10 pt-[88px]">
+      <div className="container-wide pb-10 pt-[88px]">
         <div className="flex flex-wrap gap-14 border-b border-ivory/15 pb-16">
           <div className="min-w-0 flex-[2_1_340px]">
             <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} className="mb-5 h-[52px] w-auto" />

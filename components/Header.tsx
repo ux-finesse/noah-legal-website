@@ -51,7 +51,7 @@ export default function Header({ areas }: { areas: Area[] }) {
 
   return (
     <div className="on-navy relative z-20 border-b border-ivory/15 text-ivory">
-      <div className="container-site flex items-center justify-between gap-5 py-5 lg:py-6">
+      <div className="container-wide flex items-center justify-between gap-5 py-5 lg:py-6">
         <Link href="/" aria-label="NOAH LEGAL — home" className="block shrink-0">
           <Image src="/media/logo.svg" alt="NOAH LEGAL" width={119} height={52} priority className="h-11 w-auto lg:h-[42px]" />
         </Link>
@@ -70,7 +70,7 @@ export default function Header({ areas }: { areas: Area[] }) {
             {expOpen && (
               <div
                 id="expertise-menu"
-                className="absolute -left-8 top-full z-30 w-[min(720px,92vw)] border border-ivory/15 bg-navy p-8 shadow-[0_24px_48px_rgba(0,0,0,0.3)]"
+                className="absolute -left-8 top-full z-30 w-[min(720px,92vw)] rounded-md border border-ivory/15 bg-navy p-8 shadow-[0_24px_48px_rgba(0,0,0,0.3)]"
               >
                 <div className="mb-4 flex items-baseline justify-between gap-4">
                   <span className="text-xs font-semibold uppercase tracking-eyebrow text-gold">Practice areas</span>
@@ -116,7 +116,7 @@ export default function Header({ areas }: { areas: Area[] }) {
       </div>
 
       {mobileOpen && (
-        <nav id="mobile-menu" aria-label="Mobile" className="container-site border-t border-ivory/15 bg-navy pb-8 lg:hidden">
+        <nav id="mobile-menu" aria-label="Mobile" className="container-wide border-t border-ivory/15 bg-navy pb-8 lg:hidden">
           <details className="border-b border-ivory/10">
             <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between text-lg">Expertise</summary>
             <div className="flex flex-col pb-3">
